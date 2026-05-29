@@ -1,0 +1,54 @@
+from pycat.core import Window, Sprite, KeyCode, Scheduler, RotationMode, Player, Color
+import random
+
+window = Window()
+
+ammo = window.create_label()
+ammo.text = "ammo:30/120"
+speed = 0
+
+class player(Sprite):
+    
+    def on_create(self):
+        self.image = "img/player.png"
+        self.position = window.center
+        self.speed = 10
+        self.scale = 0.2
+        self.ammo = 30
+        self.bullet = 120
+    def on_update(self, dt):
+        ammo.text = "ammo:"+str(self.ammo)+"/120"
+        #global speed
+        #if self.on_key_press(KeyCode.W):
+
+    def on_left_click_anywhere(self):
+        self.ammo -= 1
+        
+        window.create_sprite(bullet)    
+        
+        
+
+player = window.create_sprite(player)
+
+
+
+class bullet(Sprite):
+    global ammo
+    def on_create(self):
+        
+        self.scale = 10
+        self.color = Color.YELLOW
+        self.position = player.position
+        self.speed = 5
+        self.point_toward_mouse_cursor()
+        self.add_tag('bullet')
+  
+
+    def on_update(self, dt):
+        self.move_forward(self.speed)
+        
+        if self.is_touching_window_edge():
+            self.delete()
+
+window.run()
+        
